@@ -3,9 +3,18 @@ public class Final {
 
   // main method
 
-  //generateSign
-
-  // generateHoroscope
-
   }
+  
+  public static String generateSign(String month, int day) {
+    
+    // generateSign
+    
+  }
+  
+  public static String generateHoroscope() {
+  
+    // generateHoroscope
+    
+  }
+  
 }
