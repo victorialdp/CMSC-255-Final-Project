@@ -1,7 +1,7 @@
 public class Final {
+  //main method
   public static void main(String[] args) {
-
-  // main method
+    //main method
   }
 
   //generateSign
@@ -10,11 +10,10 @@ public class Final {
     }
 
   // generateHoroscope
-
   public static String generateHoroscope() {
-  
-    // generateHoroscope
-    
+      // generateHoroscope
+  }
+          
   }
   
 }
