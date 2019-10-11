@@ -3,13 +3,16 @@ public class Final {
 
   // main method
 
-  }
-  
-  public static String generateSign(String month, int day) {
+
+  //generateSign
     
-    // generateSign
-    
-  }
+    public static String generateSign(String month, int day) {
+      if (month.isequal("January")
+    }
+
+  // generateHoroscope
+
+
   
   public static String generateHoroscope() {
   
