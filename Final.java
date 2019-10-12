@@ -1,3 +1,11 @@
+import java.util.Scanner;
+
+// This import statement allows us to read from a text file
+import java.io.File;
+
+// This import statement allows us to respond to an error if the file is not found
+import java.io.FileNotFoundException;
+
 public class Final {
   //main method
   public static void main(String[] args) {
@@ -34,10 +42,50 @@ public class Final {
         
     }
 
-  // generateHoroscope
-  public static String generateHoroscope() {
-      // generateHoroscope
-  }
+	// Returns a random String to use as a horoscope
+	public static String generateHoroscope() {
+		
+		// Horoscopes are actually constructed from fortune cookie fortunes 
+		// taken from https://joshmadison.com/2008/04/20/fortune-cookie-fortunes/
+		
+		// The try block is here in case the file cannot be found
+		try {
+			// Creates a File object from a .txt file "Horoscopes.txt"
+			// Horoscopes.txt must be located in the same directory as the program
+			File horoscopeFile = new File("Horoscopes.txt");
+			
+			// We create two Scanners, the first to read the number of lines,
+			// the second to read the content of each line.
+			// Two Scanners are required as you cannot rewind a Scanner
+			// The Scanners read from the file rather than from System.in (command line)
+			Scanner readLines = new Scanner(horoscopeFile);
+			Scanner readText = new Scanner(horoscopeFile);
+			
+			// Counts the number of lines, then creates a String array of that length
+			int lineCount = 0;
+			while (readLines.hasNextLine()) {
+				readLines.nextLine();
+				lineCount++;
+			}
+			String[] horoscopes = new String[lineCount];
+		
+			// Fills the array with the various fortunes in the file
+			for (int i = 0 ; i < lineCount ; i++) {
+				horoscopes[i] = readText.nextLine();
+			}
+			
+			// Generates two random integers between 0 and lineCount - 1
+			// then returns a two-sentence horoscope 
+			// constructed from the two fortunes found at those indices
+			int index1 = (int)(Math.random() * lineCount);
+			int index2 = (int)(Math.random() * lineCount);
+			return horoscopes[index1] + " " + horoscopes[index2];
+			
+		} 
+		// Error message in the event the file is not found
+		catch (FileNotFoundException error) {
+			return "I'm sorry, we seem to have lost our star charts. Try again later.";
+		}
           
   }
   
