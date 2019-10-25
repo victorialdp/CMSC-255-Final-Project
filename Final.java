@@ -7,9 +7,20 @@ import java.io.File;
 import java.io.FileNotFoundException;
 
 public class Final {
-  //main method
   public static void main(String[] args) {
-    //main method
+    
+    Scanner input = new Scanner(System.in);
+
+    System.out.println("Enter a birth month: ");
+    String month = input.nextLine();
+    System.out.println("Enter a a birth day: ");
+    int day = input.nextInt();
+    
+    String sign = generaterSign(month, day);
+    String horoscope = generateHoroscope();
+    
+    System.out.println(sign + " " + horoscope);
+    
   }
 
   //generateSign
