@@ -14,7 +14,7 @@ public class Final {
 
     do {
       System.out.println("Enter a birth month: ");
-      String month = input.nextLine();
+      String month = input.next();
       System.out.println("Enter a birth day: ");
       int day = input.nextInt();
 
