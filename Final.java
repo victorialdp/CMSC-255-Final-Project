@@ -13,13 +13,13 @@ public class Final {
 
     System.out.println("Enter a birth month: ");
     String month = input.nextLine();
-    System.out.println("Enter a a birth day: ");
+    System.out.println("Enter a birth day: ");
     int day = input.nextInt();
     
     String sign = generateSign(month, day);
     String horoscope = generateHoroscope();
     
-    System.out.println(sign + " " + horoscope);
+    System.out.println(sign + ": " + horoscope);
     
   }
 
