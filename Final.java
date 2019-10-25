@@ -9,17 +9,24 @@ import java.io.FileNotFoundException;
 public class Final {
   public static void main(String[] args) {
     
+    boolean continue;
     Scanner input = new Scanner(System.in);
 
-    System.out.println("Enter a birth month: ");
-    String month = input.nextLine();
-    System.out.println("Enter a birth day: ");
-    int day = input.nextInt();
-    
-    String sign = generateSign(month, day);
-    String horoscope = generateHoroscope();
-    
-    System.out.println(sign + ": " + horoscope);
+    do {
+      System.out.println("Enter a birth month: ");
+      String month = input.nextLine();
+      System.out.println("Enter a birth day: ");
+      int day = input.nextInt();
+
+      String sign = generateSign(month, day);
+      String horoscope = generateHoroscope();
+
+      System.out.println(sign + ": " + horoscope);
+      System.out.println("Do you want me to read another horoscope? (y/n)");
+      String userEntry = input.next();
+      continue = userEntry.equalsIgnoreCase("yes") || userEntry.charAt(0).toUpperCase() == 'Y';
+      
+    } while (continue);
     
   }
 
