@@ -24,7 +24,7 @@ public class Final {
       System.out.println(sign + ": " + horoscope);
       System.out.println("Do you want me to read another horoscope? (y/n)");
       String userEntry = input.next();
-      repeat = userEntry.equalsIgnoreCase("yes") || userEntry.charAt(0).toUpperCase() == 'Y';
+      repeat = userEntry.equalsIgnoreCase("yes") || Character.toUpperCase(userEntry.charAt(0)) == 'Y';
       
     } while (repeat);
     
