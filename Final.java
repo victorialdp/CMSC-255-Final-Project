@@ -16,7 +16,7 @@ public class Final {
     System.out.println("Enter a a birth day: ");
     int day = input.nextInt();
     
-    String sign = generaterSign(month, day);
+    String sign = generateSign(month, day);
     String horoscope = generateHoroscope();
     
     System.out.println(sign + " " + horoscope);
