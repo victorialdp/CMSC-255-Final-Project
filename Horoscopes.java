@@ -1,3 +1,18 @@
+/****************************************************************************
+* Horoscopes.java
+****************************************************************************
+* This is the Java solution for the problem we chose in Milestone 1. The
+* program prompts the user to enter their birthday, uses that information
+* to compute the user's star sign, and then generates a horoscope by
+* randomly selecting and combining two fortunes from a list of fortune cookie
+* fortunes stored in Horoscopes.txt
+*____________________________________________________________________________
+* 
+* Jazmin Gering, Victoria Lopez del Pino, Sean Youngstone
+* October 31, 2019
+* CMSC 255 002
+****************************************************************************/
+
 import java.util.Scanner;
 
 // This import statement allows us to read from a text file
