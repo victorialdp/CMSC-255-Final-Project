@@ -1,3 +1,17 @@
+/****************************************************************************
+ * HoroscopesJavaFX.java
+ ****************************************************************************
+ * This is the GUI design for our horoscope program. It creates a window with
+ * drop-down menus for the user's birth month and birth day along with a
+ * button to run the program. Below the input menus, it displays an image
+ * representing the user's star sign and the text of a horoscope.
+ *____________________________________________________________________________
+ *
+ * Jazmin Gering, Victoria Lopez del Pino, Sean Youngstone
+ * October 31, 2019
+ * CMSC 255 002
+ ****************************************************************************/
+
 // This long list imports all the necessary tools for the code below
 import javafx.application.Application;
 import javafx.collections.FXCollections;
