@@ -6,31 +6,36 @@ import java.io.File;
 // This import statement allows us to respond to an error if the file is not found
 import java.io.FileNotFoundException;
 
-public class Final {
+public class Horoscopes {
   public static void main(String[] args) {
     
     boolean repeat;
     Scanner input = new Scanner(System.in);
 
+    // Program repeats using a do/while loop if user wishes to run it again
     do {
+      
+      // Takes user input
       System.out.println("Enter a birth month: ");
       String month = input.next();
       System.out.println("Enter a birth day: ");
       int day = input.nextInt();
 
+      // Calls on other methods to generate sign and horoscope
       String sign = generateSign(month, day);
       String horoscope = generateHoroscope();
 
+      // Prints star sign and randomly generated horoscope, then asks user if they wish to continue
       System.out.println(sign + ": " + horoscope);
       System.out.println("Do you want me to read another horoscope? (y/n)");
       String userEntry = input.next();
-      repeat = userEntry.equalsIgnoreCase("yes") || Character.toUpperCase(userEntry.charAt(0)) == 'Y';
+      repeat = Character.toUpperCase(userEntry.charAt(0)) == 'Y';
       
     } while (repeat);
     
   }
 
-  //generateSign
+  // Finds user's star sign using a chain of if/else statements
   public static String generateSign(String month, int day) {
     if (month.equals("January") && day >= 20 || month.equals("February") && day <= 18) {
       return "Aquarius";
