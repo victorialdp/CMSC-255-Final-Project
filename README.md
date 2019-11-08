@@ -1,6 +1,17 @@
 # CMSC-255-Final-Project
 Group Project
 
+Victoria
+* Sound Efects
+* Gifs in place of still images
+
+Sean
+* Loading Page/animation
+* Fonts/text effects
+
+Jazmin
+* Other images we can use
+* Appearance of drop down menus
 
 Google Doc:
 
