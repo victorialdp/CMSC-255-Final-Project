@@ -66,7 +66,7 @@ public class HoroscopesJavaFX extends Application {
 
         // Creates a starting message and image using a picture from an astrology website
         Label horoscope = new Label("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
-        ImageView starSign = new ImageView("Signs\\StarCluster.jpg");
+        ImageView starSign = new ImageView("Signs/StarCluster.jpg");
 
         // Creates a button to compute the horoscope with an action handler
         Button computeButton = new Button("Compute Horoscope");
@@ -76,7 +76,7 @@ public class HoroscopesJavaFX extends Application {
             horoscope.setText(Horoscopes.generateHoroscope());
 
             // Calls generateSign on the selected month and day, then updates the image to match the resulting sign
-            starSign.setImage(new Image("Signs\\" + Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue()) + ".gif"));
+            starSign.setImage(new Image("Signs/" + Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue()) + ".gif"));
         });
 
         // Sets up a subpane with both comboboxes, corresponding Labels, and the compute button
