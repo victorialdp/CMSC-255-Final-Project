@@ -49,8 +49,9 @@ public class HoroscopesJavaFX extends Application {
         monthBox.setValue("January");
         dayBox.setValue(1);
 
-        // Sets number of days to match the month
+        // Sets number of days to match the month, and changes day value if out of range
         monthBox.setOnAction(e -> {
+            int day = dayBox.getValue();
             if ("February".equals(monthBox.getValue())) {
                 dayBox.setItems(FXCollections.observableArrayList(days29));
             }
@@ -60,6 +61,7 @@ public class HoroscopesJavaFX extends Application {
             else {
                 dayBox.setItems(FXCollections.observableArrayList(days31));
             }
+            dayBox.setValue(Math.min(day, dayBox.getItems().size()));
         });
 
         // Creates a starting message and image using a picture from an astrology website
