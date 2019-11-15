@@ -22,6 +22,7 @@ import javafx.scene.control.Label;
 import javafx.scene.Scene;
 import javafx.scene.image.*;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
@@ -65,7 +66,7 @@ public class HoroscopesJavaFX extends Application {
         });
 
         // Creates a starting message and image using a picture from an astrology website
-        Label horoscope = new Label("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
+        Text horoscope = new Text("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
         ImageView starSign = new ImageView("Signs/StarCluster.jpg");
 
         // Creates a button to compute the horoscope with an action handler
@@ -74,6 +75,10 @@ public class HoroscopesJavaFX extends Application {
 
             // Replaces bottom text with a randomly generated horoscope
             horoscope.setText(Horoscopes.generateHoroscope());
+
+            // Changes font and color
+            horoscope.setFont(Font.font("Monotype Corsiva", FontWeight.BOLD, 30));
+            horoscope.setFill(Color.rgb(142, 74, 253));
 
             // Calls generateSign on the selected month and day, then updates the image to match the resulting sign
             starSign.setImage(new Image("Signs/" + Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue()) + ".gif"));
@@ -87,18 +92,26 @@ public class HoroscopesJavaFX extends Application {
         inputPane.getChildren().add(new Label("Enter birth day:"));
         inputPane.getChildren().add(dayBox);
         inputPane.getChildren().add(computeButton);
-        horoscope.setFont(Font.font("Times New Roman", FontWeight.BOLD, FontPosture.ITALIC, 20));
-        horoscope.setWrapText(true);
+        horoscope.setFont(Font.font("Century Gothic", FontWeight.BOLD, 20));
+        horoscope.setWrappingWidth(480);
+        horoscope.setTextAlignment(TextAlignment.CENTER);
 
         // Creates a master pane, pads it, and assigns the above elements to occupy top, center, and bottom
         BorderPane pane = new BorderPane();
-        pane.setPadding(new Insets(10));
+        pane.setPadding(new Insets(10, 10, 20, 10));
         pane.setTop(inputPane);
         pane.setCenter(starSign);
         pane.setBottom(horoscope);
 
+        // Set colors for the display
+        monthBox.setStyle("-fx-color: #da99ff");
+        dayBox.setStyle("-fx-color: #da99ff");
+        computeButton.setStyle("-fx-color: #da99ff");
+        horoscope.setFill(Color.rgb(109, 52, 253));
+        pane.setBackground(new Background(new BackgroundFill(Color.rgb(236, 204, 255), null, null)));
+
         // Incorporates the master pane into a Scene with a set size and title
-        Scene scene = new Scene(pane, 500, 350);
+        Scene scene = new Scene(pane, 500, 400);
         primaryStage.setTitle("Horoscope Wizard");
         primaryStage.setScene(scene);
 
@@ -112,5 +125,6 @@ public class HoroscopesJavaFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
+
 
 }
