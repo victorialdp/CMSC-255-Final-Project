@@ -5,7 +5,7 @@
  * drop-down menus for the user's birth month and birth day along with a
  * button to run the program. Below the input menus, it displays an image
  * representing the user's star sign and the text of a horoscope.
- * 
+ *
  * All images used in this project were taken from http://www.astrology-insight.com/
  *____________________________________________________________________________
  *
@@ -14,7 +14,7 @@
  * CMSC 255 002
  ****************************************************************************/
 
-// This long list imports all the necessary tools for the code below
+// This long list imports all the necessary JavaFX tools for the code below
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -28,10 +28,15 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-// Import animation tools (separate for clarity for future manipulation)
-import animatefx.animation.BounceInDown;
+// Imports animatefx animation tools (separate for clarity for future manipulation)
+// Requires access to animatefx JAR file
 import animatefx.animation.FadeIn;
 import animatefx.animation.Pulse;
+
+// Imports Java classes that allow us to read from a .txt file
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
 public class HoroscopesJavaFX extends Application {
 
@@ -117,17 +122,21 @@ public class HoroscopesJavaFX extends Application {
         // Provides instructions for what to do when the Computer Horoscope button is pressed
         computeButton.setOnAction(e -> {
 
-            // Replaces bottom text with a randomly generated horoscope
-            horoscope.setText(Horoscopes.generateHoroscope());
+            // Replaces bottom text with a randomly generated horoscope and causes text to fade in
+            horoscope.setText(generateHoroscope());
+            new FadeIn(pane.getBottom()).play();
 
             // Changes font and color
             horoscope.setFont(Font.font("Monotype Corsiva", FontWeight.BOLD, 30));
             horoscope.setFill(Color.rgb(142, 74, 253));
 
             // Calls generateSign on the selected month and day, then updates the image to match the resulting sign
-            String sign = Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue());
+            String sign = generateSign(monthBox.getValue(), dayBox.getValue());
             try {
                 pane.setCenter(new ImageView(new Image("Signs/" + sign + ".gif")));
+
+                // Causes image to fade in
+                new FadeIn(pane.getCenter()).play();
             }
 
             // If image not found, displays text instead
@@ -139,20 +148,94 @@ public class HoroscopesJavaFX extends Application {
         // Prevents user from resizing the Stage and then generates the stage
         primaryStage.setResizable(false);
         primaryStage.show();
-        
-        // Animate the pane, scene, and button
-        new FadeIn(pane).play();
-        new Pulse(scene).play();
-        new BounceInDown(computeButton).play();
-        
-        
-   
+
+        // Cause the elements to pulse on startup
+        new Pulse(pane.getTop()).play();
+        new Pulse(pane.getCenter()).play();
+        new Pulse(pane.getBottom()).play();
 
     }
 
     // Default main method for JavaFX programs
     public static void main(String[] args) {
         launch(args);
+    }
+
+    // Finds user's star sign using a chain of if/else statements
+    public static String generateSign(String month, int day) {
+        if (month.equals("January") && day >= 20 || month.equals("February") && day <= 18) {
+            return "Aquarius";
+        } else if (month.equals("February") || month.equals("March") && day <= 20) {
+            return "Pisces";
+        } else if (month.equals("March") || month.equals("April") && day <= 19) {
+            return "Aries";
+        } else if (month.equals("April") || month.equals("May") && day <= 20) {
+            return "Taurus";
+        } else if (month.equals("May") || month.equals("June") && day <= 20) {
+            return "Gemini";
+        } else if (month.equals("June") || month.equals("July") && day <= 22) {
+            return "Cancer";
+        } else if (month.equals("July") || month.equals("August") && day <= 22) {
+            return "Leo";
+        } else if (month.equals("August") || month.equals("September") && day <= 22) {
+            return "Virgo";
+        } else if (month.equals("September") || month.equals("October") && day <= 22) {
+            return "Libra";
+        } else if (month.equals("October") || month.equals("November") && day <= 21) {
+            return "Scorpio";
+        } else if (month.equals("November") || month.equals("December") && day <= 21) {
+            return "Sagittarius";
+        } else {
+            return "Capricorn";
+        }
+
+    }
+
+    // Returns a random String to use as a horoscope
+    public static String generateHoroscope() {
+
+        // Horoscopes are actually constructed from fortune cookie fortunes 
+        // taken from https://joshmadison.com/2008/04/20/fortune-cookie-fortunes/
+
+        // The try block is here in case the file cannot be found
+        try {
+            // Creates a File object from a .txt file "Horoscopes.txt"
+            // Horoscopes.txt must be located in the same directory as the program
+            File horoscopeFile = new File("Horoscopes.txt");
+
+            // We create two Scanners, the first to read the number of lines,
+            // the second to read the content of each line.
+            // Two Scanners are required as you cannot rewind a Scanner
+            // The Scanners read from the file rather than from System.in (command line)
+            Scanner readLines = new Scanner(horoscopeFile);
+            Scanner readText = new Scanner(horoscopeFile);
+
+            // Counts the number of lines, then creates a String array of that length
+            int lineCount = 0;
+            while (readLines.hasNextLine()) {
+                readLines.nextLine();
+                lineCount++;
+            }
+            String[] horoscopes = new String[lineCount];
+
+            // Fills the array with the various fortunes in the file
+            for (int i = 0 ; i < lineCount ; i++) {
+                horoscopes[i] = readText.nextLine();
+            }
+
+            // Generates two random integers between 0 and lineCount - 1
+            // then returns a two-sentence horoscope 
+            // constructed from the two fortunes found at those indices
+            int index1 = (int)(Math.random() * lineCount);
+            int index2 = (int)(Math.random() * lineCount);
+            return horoscopes[index1] + " " + horoscopes[index2];
+
+        }
+        // Error message in the event the file is not found
+        catch (FileNotFoundException error) {
+            return "I'm sorry, we seem to have lost our star charts. Try again later.";
+        }
+
     }
 
 }
