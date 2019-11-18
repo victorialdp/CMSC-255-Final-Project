@@ -1,0 +1,6 @@
+<dependency>
+  <groupId>com.onexip</groupId>
+  <artifactId>animate-fx</artifactId>
+  <version>0.0.1</version>
+  <type>pom</type>
+</dependency>
