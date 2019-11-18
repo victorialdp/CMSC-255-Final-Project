@@ -5,10 +5,12 @@
  * drop-down menus for the user's birth month and birth day along with a
  * button to run the program. Below the input menus, it displays an image
  * representing the user's star sign and the text of a horoscope.
+ * 
+ * All images used in this project were taken from http://www.astrology-insight.com/
  *____________________________________________________________________________
  *
  * Jazmin Gering, Victoria Lopez del Pino, Sean Youngstone
- * October 31, 2019
+ * November 19, 2019
  * CMSC 255 002
  ****************************************************************************/
 
@@ -65,24 +67,9 @@ public class HoroscopesJavaFX extends Application {
             dayBox.setValue(Math.min(day, dayBox.getItems().size()));
         });
 
-        // Creates a starting message and image using a picture from an astrology website
+        // Creates a starting message and button to be integrated into the interface.
         Text horoscope = new Text("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
-        ImageView starSign = new ImageView("Signs/StarCluster.jpg");
-
-        // Creates a button to compute the horoscope with an action handler
         Button computeButton = new Button("Compute Horoscope");
-        computeButton.setOnAction(e -> {
-
-            // Replaces bottom text with a randomly generated horoscope
-            horoscope.setText(Horoscopes.generateHoroscope());
-
-            // Changes font and color
-            horoscope.setFont(Font.font("Monotype Corsiva", FontWeight.BOLD, 30));
-            horoscope.setFill(Color.rgb(142, 74, 253));
-
-            // Calls generateSign on the selected month and day, then updates the image to match the resulting sign
-            starSign.setImage(new Image("Signs/" + Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue()) + ".gif"));
-        });
 
         // Sets up a subpane with both comboboxes, corresponding Labels, and the compute button
         FlowPane inputPane = new FlowPane();
@@ -96,14 +83,13 @@ public class HoroscopesJavaFX extends Application {
         horoscope.setWrappingWidth(480);
         horoscope.setTextAlignment(TextAlignment.CENTER);
 
-        // Creates a master pane, pads it, and assigns the above elements to occupy top, center, and bottom
+        // Creates a master pane, pads it, and assigns the above elements to occupy top and bottom
         BorderPane pane = new BorderPane();
         pane.setPadding(new Insets(10, 10, 20, 10));
         pane.setTop(inputPane);
-        pane.setCenter(starSign);
         pane.setBottom(horoscope);
 
-        // Set colors for the display
+        // Sets colors for the display
         monthBox.setStyle("-fx-color: #da99ff");
         dayBox.setStyle("-fx-color: #da99ff");
         computeButton.setStyle("-fx-color: #da99ff");
@@ -115,6 +101,36 @@ public class HoroscopesJavaFX extends Application {
         primaryStage.setTitle("Horoscope Wizard");
         primaryStage.setScene(scene);
 
+        // Attempts to place a starting image in the center of the pane, and displays an error otherwise
+        try {
+            pane.setCenter(new ImageView(new Image("Signs/StarCluster.jpg")));
+        }
+        catch (IllegalArgumentException error) {
+            pane.setCenter(new Text("[Image Not Found]"));
+        }
+
+        // Provides instructions for what to do when the Computer Horoscope button is pressed
+        computeButton.setOnAction(e -> {
+
+            // Replaces bottom text with a randomly generated horoscope
+            horoscope.setText(Horoscopes.generateHoroscope());
+
+            // Changes font and color
+            horoscope.setFont(Font.font("Monotype Corsiva", FontWeight.BOLD, 30));
+            horoscope.setFill(Color.rgb(142, 74, 253));
+
+            // Calls generateSign on the selected month and day, then updates the image to match the resulting sign
+            String sign = Horoscopes.generateSign(monthBox.getValue(), dayBox.getValue());
+            try {
+                pane.setCenter(new ImageView(new Image("Signs/" + sign + ".gif")));
+            }
+
+            // If image not found, displays text instead
+            catch (IllegalArgumentException error) {
+                pane.setCenter(new Text("[" + sign + "]"));
+            }
+        });
+
         // Prevents user from resizing the Stage and then generates the stage
         primaryStage.setResizable(false);
         primaryStage.show();
@@ -125,6 +141,5 @@ public class HoroscopesJavaFX extends Application {
     public static void main(String[] args) {
         launch(args);
     }
-
 
 }
