@@ -204,11 +204,8 @@ public class HoroscopesJavaFX extends Application {
 
         // The try block is here in case the file cannot be found
         try {
-            // Creates a File object from a .txt file "Horoscopes.txt"
-            File horoscopeFile = new File("Horoscopes.txt");
-
-            // Creates a Scanner to read the file and an ArrayList to store the horoscopes
-            Scanner readText = new Scanner(horoscopeFile);
+            // Creates a Scanner to read the .txt file "Horoscopes.txt" and an ArrayList to store the horoscopes
+            Scanner readText = new Scanner(new File("Horoscopes.txt"));
             ArrayList<String> horoscopes = new ArrayList<>();
 
             // Fills the ArrayList with the various fortunes in the file
