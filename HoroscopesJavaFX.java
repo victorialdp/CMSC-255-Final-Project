@@ -29,13 +29,14 @@ import javafx.scene.text.*;
 import javafx.stage.Stage;
 
 // Imports AnimateFX animation tools
-// Requires access to animatefx JAR file
+// Requires access to AnimateFX JAR file
 import animatefx.animation.FadeIn;
 import animatefx.animation.Pulse;
 
 // Imports Java classes that allow us to read from a .txt file
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class HoroscopesJavaFX extends Application {
@@ -74,7 +75,7 @@ public class HoroscopesJavaFX extends Application {
             else {
                 dayBox.setItems(FXCollections.observableArrayList(days31));
             }
-            
+
             // If chosen day was out of range for the new month, adjusts value to last day of that month
             dayBox.setValue(Math.min(day, dayBox.getItems().size()));
         });
@@ -90,7 +91,7 @@ public class HoroscopesJavaFX extends Application {
         inputPane.getChildren().add(new Label("Enter birth day:"));
         inputPane.getChildren().add(dayBox);
         inputPane.getChildren().add(computeButton);
-        
+
         // Creates a a Text object with an introductory message and then formats it
         Text horoscope = new Text("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
         horoscope.setFont(Font.font("Century Gothic", FontWeight.BOLD, 20));
@@ -102,7 +103,7 @@ public class HoroscopesJavaFX extends Application {
         pane.setPadding(new Insets(10, 10, 20, 10));
         pane.setTop(inputPane);
         pane.setBottom(horoscope);
-        
+
         // Attempts to place a starting image in the center of the pane, and displays an error otherwise
         try {
             pane.setCenter(new ImageView(new Image("Signs/StarCluster.jpg")));
@@ -110,7 +111,7 @@ public class HoroscopesJavaFX extends Application {
         catch (IllegalArgumentException error) {
             pane.setCenter(new Text("[Image Not Found]"));
         }
-        
+
         // Provides instructions for what to do when the Compute Horoscope button is pressed
         computeButton.setOnAction(e -> {
 
@@ -166,7 +167,7 @@ public class HoroscopesJavaFX extends Application {
     }
 
     // Finds user's star sign using a chain of if/else statements
-    public static String generateSign(String month, int day) {
+    private static String generateSign(String month, int day) {
         if (month.equals("January") && day >= 20 || month.equals("February") && day <= 18) {
             return "Aquarius";
         } else if (month.equals("February") || month.equals("March") && day <= 20) {
@@ -196,43 +197,33 @@ public class HoroscopesJavaFX extends Application {
     }
 
     // Returns a random String to use as a horoscope
-    public static String generateHoroscope() {
+    private static String generateHoroscope() {
 
-        // Horoscopes are actually constructed from fortune cookie fortunes 
+        // Horoscopes are actually constructed from fortune cookie fortunes
         // taken from https://joshmadison.com/2008/04/20/fortune-cookie-fortunes/
 
         // The try block is here in case the file cannot be found
         try {
             // Creates a File object from a .txt file "Horoscopes.txt"
-            // Horoscopes.txt must be located in the same directory as the program
             File horoscopeFile = new File("Horoscopes.txt");
 
-            // We create two Scanners, the first to read the number of lines,
-            // the second to read the content of each line.
-            // Two Scanners are required as you cannot rewind a Scanner
-            // The Scanners read from the file rather than from System.in (command line)
-            Scanner readLines = new Scanner(horoscopeFile);
+            // Creates a Scanner to read the file and an ArrayList to store the horoscopes
             Scanner readText = new Scanner(horoscopeFile);
+            ArrayList<String> horoscopes = new ArrayList<>();
 
-            // Counts the number of lines, then creates a String array of that length
-            int lineCount = 0;
-            while (readLines.hasNextLine()) {
-                readLines.nextLine();
-                lineCount++;
-            }
-            String[] horoscopes = new String[lineCount];
-
-            // Fills the array with the various fortunes in the file
-            for (int i = 0 ; i < lineCount ; i++) {
-                horoscopes[i] = readText.nextLine();
+            // Fills the ArrayList with the various fortunes in the file
+            while (readText.hasNextLine()) {
+                horoscopes.add(readText.nextLine());
             }
 
-            // Generates two random integers between 0 and lineCount - 1
-            // then returns a two-sentence horoscope 
-            // constructed from the two fortunes found at those indices
-            int index1 = (int)(Math.random() * lineCount);
-            int index2 = (int)(Math.random() * lineCount);
-            return horoscopes[index1] + " " + horoscopes[index2];
+            // Generates two random integers between 0 and horoscopes.size() - 1, checks they aren't equal,
+            // then returns a two-sentence horoscope constructed from the fortunes found at those two indices
+            int index1 = (int)(Math.random() * horoscopes.size());
+            int index2;
+            do {
+                index2 = (int)(Math.random() * horoscopes.size());
+            } while (index1 == index2);
+            return horoscopes.get(index1) + " " + horoscopes.get(index2);
 
         }
         // Error message in the event the file is not found
