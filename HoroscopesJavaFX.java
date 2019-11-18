@@ -14,7 +14,7 @@
  * CMSC 255 002
  ****************************************************************************/
 
-// This long list imports all the necessary JavaFX tools for the code below
+// Imports all the necessary JavaFX tools for the code below
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.geometry.Insets;
@@ -28,7 +28,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
 
-// Imports animatefx animation tools (separate for clarity for future manipulation)
+// Imports AnimateFX animation tools
 // Requires access to animatefx JAR file
 import animatefx.animation.FadeIn;
 import animatefx.animation.Pulse;
@@ -62,7 +62,7 @@ public class HoroscopesJavaFX extends Application {
         monthBox.setValue("January");
         dayBox.setValue(1);
 
-        // Sets number of days to match the month, and changes day value if out of range
+        // Sets number of days to match the chosen month
         monthBox.setOnAction(e -> {
             int day = dayBox.getValue();
             if ("February".equals(monthBox.getValue())) {
@@ -74,11 +74,12 @@ public class HoroscopesJavaFX extends Application {
             else {
                 dayBox.setItems(FXCollections.observableArrayList(days31));
             }
+            
+            // If chosen day was out of range for the new month, adjusts value to last day of that month
             dayBox.setValue(Math.min(day, dayBox.getItems().size()));
         });
 
-        // Creates a starting message and button to be integrated into the interface.
-        Text horoscope = new Text("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
+        // Creates a button for computing ther user's horoscope
         Button computeButton = new Button("Compute Horoscope");
 
         // Sets up a subpane with both comboboxes, corresponding Labels, and the compute button
@@ -89,6 +90,9 @@ public class HoroscopesJavaFX extends Application {
         inputPane.getChildren().add(new Label("Enter birth day:"));
         inputPane.getChildren().add(dayBox);
         inputPane.getChildren().add(computeButton);
+        
+        // Creates a a Text object with an introductory message and then formats it
+        Text horoscope = new Text("Welcome to the Horoscope Wizard! Enter your birthday to learn your destiny.");
         horoscope.setFont(Font.font("Century Gothic", FontWeight.BOLD, 20));
         horoscope.setWrappingWidth(480);
         horoscope.setTextAlignment(TextAlignment.CENTER);
@@ -98,19 +102,7 @@ public class HoroscopesJavaFX extends Application {
         pane.setPadding(new Insets(10, 10, 20, 10));
         pane.setTop(inputPane);
         pane.setBottom(horoscope);
-
-        // Sets colors for the display
-        monthBox.setStyle("-fx-color: #da99ff");
-        dayBox.setStyle("-fx-color: #da99ff");
-        computeButton.setStyle("-fx-color: #da99ff");
-        horoscope.setFill(Color.rgb(109, 52, 253));
-        pane.setBackground(new Background(new BackgroundFill(Color.rgb(236, 204, 255), null, null)));
-
-        // Incorporates the master pane into a Scene with a set size and title
-        Scene scene = new Scene(pane, 500, 400);
-        primaryStage.setTitle("Horoscope Wizard");
-        primaryStage.setScene(scene);
-
+        
         // Attempts to place a starting image in the center of the pane, and displays an error otherwise
         try {
             pane.setCenter(new ImageView(new Image("Signs/StarCluster.jpg")));
@@ -118,8 +110,8 @@ public class HoroscopesJavaFX extends Application {
         catch (IllegalArgumentException error) {
             pane.setCenter(new Text("[Image Not Found]"));
         }
-
-        // Provides instructions for what to do when the Computer Horoscope button is pressed
+        
+        // Provides instructions for what to do when the Compute Horoscope button is pressed
         computeButton.setOnAction(e -> {
 
             // Replaces bottom text with a randomly generated horoscope and causes text to fade in
@@ -144,6 +136,18 @@ public class HoroscopesJavaFX extends Application {
                 pane.setCenter(new Text("[" + sign + "]"));
             }
         });
+
+        // Sets colors for the display
+        monthBox.setStyle("-fx-color: #da99ff");
+        dayBox.setStyle("-fx-color: #da99ff");
+        computeButton.setStyle("-fx-color: #da99ff");
+        horoscope.setFill(Color.rgb(109, 52, 253));
+        pane.setBackground(new Background(new BackgroundFill(Color.rgb(236, 204, 255), null, null)));
+
+        // Incorporates the master pane into a Scene with a set size and title
+        Scene scene = new Scene(pane, 500, 400);
+        primaryStage.setTitle("Horoscope Wizard");
+        primaryStage.setScene(scene);
 
         // Prevents user from resizing the Stage and then generates the stage
         primaryStage.setResizable(false);
