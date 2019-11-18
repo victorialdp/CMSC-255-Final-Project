@@ -7,7 +7,7 @@
  * representing the user's star sign and the text of a horoscope.
  *____________________________________________________________________________
  *
- * Jazmin Gering, Victoria Lopez del Pino, Sean Youngstone
+ * Jazmin Gering, Victoria Lopez Del Pino, Sean Youngstone
  * October 31, 2019
  * CMSC 255 002
  ****************************************************************************/
@@ -25,6 +25,11 @@ import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.*;
 import javafx.stage.Stage;
+
+// Import animation tools (separate for clarity for future manipulation)
+import animatefx.animation.BounceInDown;
+import animatefx.animation.FadeIn;
+import animatefx.animation.Pulse;
 
 public class HoroscopesJavaFX extends Application {
 
@@ -118,6 +123,14 @@ public class HoroscopesJavaFX extends Application {
         // Prevents user from resizing the Stage and then generates the stage
         primaryStage.setResizable(false);
         primaryStage.show();
+        
+        // Animate the pane, scene, and button
+        new FadeIn(pane).play();
+        new Pulse(scene).play();
+        new BounceInDown(computeButton).play();
+        
+        
+   
 
     }
 
