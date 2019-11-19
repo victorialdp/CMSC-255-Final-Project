@@ -6,7 +6,7 @@
  * button to run the program. Below the input menus, it displays an image
  * representing the user's star sign and the text of a horoscope.
  *
- * All images used in this project were taken from http://www.astrology-insight.com/
+ * Please read ReadMe.txt before running code.
  *____________________________________________________________________________
  *
  * Jazmin Gering, Victoria Lopez Del Pino, Sean Youngstone
@@ -198,9 +198,6 @@ public class HoroscopesJavaFX extends Application {
 
     // Returns a random String to use as a horoscope
     private static String generateHoroscope() {
-
-        // Horoscopes are actually constructed from fortune cookie fortunes
-        // taken from https://joshmadison.com/2008/04/20/fortune-cookie-fortunes/
 
         // The try block is here in case the file cannot be found
         try {
